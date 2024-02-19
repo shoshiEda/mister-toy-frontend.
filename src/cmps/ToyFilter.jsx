@@ -5,7 +5,7 @@ import { utilService } from "../services/util.service.js"
 import { useEffectUpdate } from "./customHooks/useEffectUpdate.js"
 
 
-export function CarFilter({ filterBy, onSetFilter }) {
+export function ToyFilter({ filterBy, onSetFilter }) {
     
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     onSetFilter = useRef(utilService.debounce(onSetFilter))
@@ -22,14 +22,14 @@ export function CarFilter({ filterBy, onSetFilter }) {
 
     return (
         <section className="car-filter full main-layout">
-            <h2>Cars Filter</h2>
+            <h2>Toys Filter</h2>
             <form >
-                <label htmlFor="vendor">Vendor:</label>
+                <label htmlFor="name">name:</label>
                 <input type="text"
-                    id="vendor"
-                    name="txt"
-                    placeholder="By vendor"
-                    value={filterByToEdit.txt}
+                    id="name"
+                    name="name"
+                    placeholder="By name"
+                    value={filterByToEdit.name}
                     onChange={handleChange}
                 />
 

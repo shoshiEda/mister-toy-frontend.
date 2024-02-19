@@ -6,7 +6,7 @@ import './assets/style/main.css'
 // const { Provider } = ReactRedux
 
 import { AppHeader } from './cmps/AppHeader'
-import { AppFooter } from './cmps/AppFooter'
+//import { AppFooter } from './cmps/AppFooter'
 
 import { HomePage } from './pages/HomePage'
 import { AboutUs } from './pages/AboutUs'
@@ -30,7 +30,7 @@ export function App() {
                             <Route element={<ToyIndex />} path="/toy" />
                         </Routes>
                     </main>
-                    <AppFooter />
+                    {/*<AppFooter />*/}
                 </section>
             </Router>
         </Provider>

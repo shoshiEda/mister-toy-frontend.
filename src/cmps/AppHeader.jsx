@@ -6,7 +6,7 @@ import { LoginSignup } from './LoginSignup.jsx'
 import { userService } from '../services/user.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 import { SET_USER } from '../store/reducers/user.reducer.js'
-import { SET_CART_IS_SHOWN } from '../store/reducers/car.reducer.js'
+//import { SET_CART_IS_SHOWN } from '../store/reducers/car.reducer.js'
 
 // const { useSelector, useDispatch } = ReactRedux
 // const { Link, NavLink } = ReactRouterDOM
@@ -19,7 +19,7 @@ export function AppHeader() {
     // TODO: move to storeState
     // const [user, setUser] = useState(userService.getLoggedinUser())
     const user = useSelector(storeState => storeState.userModule.loggedinUser)
-    const isCartShown = useSelector(storeState => storeState.carModule.isCartShown)
+    //const isCartShown = useSelector(storeState => storeState.carModule.isCartShown)
 
     function onLogout() {
         userService.logout()
@@ -47,12 +47,12 @@ export function AppHeader() {
     return (
         <header className="app-header full main-layout">
             <section className="header-container">
-                <h1>React Car App</h1>
+                <h1>Mister Toy</h1>
                 <nav className="app-nav">
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>
-                    <NavLink to="/car" >Cars</NavLink>
-                    <a onClick={onToggleCart} href="#">🛒 Cart</a>
+                    <NavLink to="/toy" >Toys</NavLink>
+                    {/*<a onClick={onToggleCart} href="#">🛒 Cart</a>*/}
                 </nav>
             </section>
             {user ? (
