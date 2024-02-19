@@ -13,6 +13,8 @@ import { AboutUs } from './pages/AboutUs'
 import { ToyIndex } from './pages/ToyIndex.jsx'
 import { store } from './store/store'
 import { ToyDetails } from './pages/ToyDetails.jsx'
+import { ToyEdit } from './pages/ToyEdit.jsx'
+
 
 
 export function App() {
@@ -28,6 +30,9 @@ export function App() {
                             <Route element={<AboutUs />} path="/about" />
                             <Route element={<ToyDetails />} path="/toy/:toyId" />
                             <Route element={<ToyIndex />} path="/toy" />
+                            <Route element={<ToyEdit />} path="/toy/edit/" />
+                            <Route element={<ToyEdit />} path="/toy/edit/:toyId" />
+
                         </Routes>
                     </main>
                     {/*<AppFooter />*/}

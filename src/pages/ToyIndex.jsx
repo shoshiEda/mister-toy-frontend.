@@ -2,6 +2,7 @@
 // const { useSelector, useDispatch } = ReactRedux
 
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from "react-router-dom"
 import { ToyFilter } from '../cmps/ToyFilter.jsx'
 import { ToyList } from '../cmps/ToyList.jsx'
 import { toyService } from '../services/toy.service.js'
@@ -35,38 +36,8 @@ export function ToyIndex() {
             })
     }
 
-    function onAddToy() {
-        const toyToSave = toyService.getEmptyToy()
-        saveToy(toyToSave)
-            .then((savedToy) => {
-                console.log('savedToy:', savedToy)
-                showSuccessMsg(`Toy added: ${savedToy.name}`)
-                // dispatch({ type: ADD_CAR, car: savedCar })
-            })
-            .catch(err => {
-                console.log('Cannot add toy', err)
-                showErrorMsg('Cannot add toy')
-            })
-    }
-
-    function onEditToy(toy) {
-        const price = +prompt('New price?')
-        const toyToSave = { ...toy, price }
-
-        saveToy(toyToSave)
-            .then((savedToy) => {
-                // dispatch({ type: UPDATE_CAR, car: savedCar })
-                showSuccessMsg(`Toy updated to price: $${savedToy.price}`)
-            })
-
-            .catch(err => {
-                console.log('Cannot update toy', err)
-                showErrorMsg('Cannot update toy')
-            })
-    }
 
     function onSetFilter(filterBy) {
-        console.log('filterBy:', filterBy)
         // setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
         setFilterBy(filterBy)
     }
@@ -83,11 +54,10 @@ export function ToyIndex() {
         <div>
             <h3>Toys App</h3>
             <main>
-                <button onClick={onAddToy}>Add Toy </button>
+                <button> <Link to='/toy/edit'>Add Toy</Link></button>
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                 {!isLoading && <ToyList
                     toys={toys}
-                    onEditToy={onEditToy}
                     onRemoveToy={onRemoveToy}
                     //addToCart={addToCart}
                 />}

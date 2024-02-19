@@ -1,0 +1,17 @@
+.toy-editor form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.toy-editor form input{
+    font-size: 1.5rem;
+    margin: 1rem;
+}
+
+.toy-editor form button{
+    font-size: 1.5rem;
+    margin: 1rem;
+    border-radius: 1rem;
+}

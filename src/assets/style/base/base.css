@@ -45,5 +45,5 @@ object {
 }
 
 a.active {
-  text-decoration: underline;
+  color: var(--clr1bg-light);
 }

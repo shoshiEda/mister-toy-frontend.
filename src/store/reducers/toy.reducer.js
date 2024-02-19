@@ -19,13 +19,17 @@ export const SET_IS_LOADING = 'SET_IS_LOADING'
 
 export const SET_FILTER_BY = 'SET_FILTER_BY'
 
+export const GET_LABELS='GET_LABELS'
+
 const initialState = {
     toys: [],
     lastToys: [],
     //isCartShown: false,
     //shoppingCart: [],
     isLoading: false,
-    filterBy: toyService.getDefaultFilter()
+    filterBy: toyService.getDefaultFilter(),
+    labels: ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 
+    'Outdoor', 'Battery Powered']
 }
 
 export function toyReducer(state = initialState, action = {}) {
@@ -50,6 +54,10 @@ export function toyReducer(state = initialState, action = {}) {
         case UPDATE_TOY:
             toys = state.toys.map(toy => toy._id === action.toy._id ? action.toy : toy)
             return { ...state, toys }
+
+
+        case GET_LABELS:
+            return {...state,labels}
 
 
         // shopping cart

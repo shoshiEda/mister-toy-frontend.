@@ -1,22 +1,23 @@
 import { Link } from "react-router-dom"
+import  defaultPic  from '../assets/img/default.jpeg'
 
 // const { Link } = ReactRouterDOM
-export function ToyPreview({ toy, onRemoveToy, onEditToy/*, addToCart*/ }) {
+export function ToyPreview({ toy, onRemoveToy/*, addToCart*/ }) {
 
     return (
-        <li className="car-preview" key={toy._id}>
+        <li className="toy-preview" key={toy._id}>
             <Link to={`/toy/${toy._id}`} >
                 <h4>{toy.name}</h4>
             </Link>
             <p>Price: <span>${toy.price.toLocaleString()}</span></p>
-            <p>Owner: <span>{toy.owner && toy.owner.fullname}</span></p>
+            <p>Created At: <span>{new Date(toy.createdAt).toLocaleDateString()}</span></p>
+            <img src={defaultPic} alt="Toy" />            
+
             <div>
                 <button onClick={() => {
                     onRemoveToy(toy._id)
                 }}>x</button>
-                <button onClick={() => {
-                    onEditToy(toy)
-                }}>Edit</button>
+                <button><Link to={`/toy/edit/${toy._id}`}>edit</Link></button>
             </div>
             {/*<button className="buy" onClick={() => {
                 addToCart(car)

@@ -1,4 +1,8 @@
-.car-filter {
+.toy-filter {
     background-color: var(--clr2bg);
     padding: 1em;
+}
+
+.toy-filter label{
+    margin: 0.5rem;
 }

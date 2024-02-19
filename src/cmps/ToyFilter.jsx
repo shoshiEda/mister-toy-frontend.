@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
 import { useEffectUpdate } from "./customHooks/useEffectUpdate.js"
-
+import { useSelector } from 'react-redux'
 
 export function ToyFilter({ filterBy, onSetFilter }) {
+
+    const labels  = useSelector(storeState => storeState.toyModule.labels)
     
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     onSetFilter = useRef(utilService.debounce(onSetFilter))
@@ -14,16 +16,45 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         onSetFilter.current(filterByToEdit)
     }, [filterByToEdit])
 
-    function handleChange({ target }) {
-        let { value, name: field, type } = target
-        value = type === 'number' ? +value : value
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
+    function onSetFilterBy(ev) {
+        ev.preventDefault()
+        console.log(filterByToEdit)
+        onSetFilter(filterByToEdit)
     }
 
+    function handleChange({ target }) {
+        const field = target.name
+        let value = target.value
+
+
+        switch (target.type) {
+            case 'number':
+            case 'range':
+                value = +value
+                break;
+
+            case 'checkbox':
+                value = target.checked
+                 break
+
+            default:
+                break;
+        }
+        console.log(field,value)
+
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            [field]: value
+        }));
+    }
+
+ 
+
     return (
-        <section className="car-filter full main-layout">
-            <h2>Toys Filter</h2>
-            <form >
+        <section className="toy-filter full main-layout">
+            <fieldset>
+            <legend>Toys Filter</legend>
+            <form onSubmit={onSetFilterBy}>
                 <label htmlFor="name">name:</label>
                 <input type="text"
                     id="name"
@@ -42,8 +73,36 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     onChange={handleChange}
                 />
 
-            </form>
+                <label htmlFor="label">Labels:</label>
+                <input type="text"
+                    id="label"
+                    name="label"
+                    placeholder="label"
+                    value={filterByToEdit.label}
+                    onChange={handleChange}
+                    list="labels"
+                />
+                <datalist id="labels">
+                    {labels.map((label,idx) =><option key={idx} value={label} />)}
+                </datalist>
+                <br />
 
+                <label htmlFor="inStock">In stock only:</label>
+                <input onChange={handleChange} type="checkbox" id="inStock" name="inStock" />
+
+
+                <label htmlFor="sortBy">Sort:</label>
+                <select name="sortBy" id="sortBy" onChange={handleChange} >
+                    <option value="">Select Sorting</option>
+                    <option value="name">By name</option>
+                    <option value="price">By price</option>
+                    <option value="ceatedAt">By criation date</option>
+                </select>
+                <label htmlFor="SortByDir">Decending </label>
+                <input onChange={handleChange} type="checkbox" id="sortByDir" name="sortByDir" />
+   
+            </form>
+            </fieldset>
         </section>
     )
 }

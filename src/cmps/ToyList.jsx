@@ -1,6 +1,6 @@
 import { ToyPreview } from "./ToyPreview.jsx";
 
-export function ToyList({ toys, onRemoveToy, onEditToy }) {
+export function ToyList({ toys, onRemoveToy }) {
 
     return (
         <ul className="car-list">
@@ -9,7 +9,6 @@ export function ToyList({ toys, onRemoveToy, onEditToy }) {
                     key={toy._id}
                     toy={toy}
                     onRemoveToy={onRemoveToy}
-                    onEditToy={onEditToy}
                     /*addToCart={addToCart}*/
                 />
             )}

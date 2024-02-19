@@ -54,11 +54,11 @@ function getDefaultFilter() {
     return {
         name: '',
         maxPrice: 0,
-        inStock: '',
+        inStock: false,
         label:'',
-        sortByName:'',
-        sortByPrice:'',
-        sortByCreated:'',
+        sortBy:'',
+        sortByDir:false,
+       
     }
 }
 
