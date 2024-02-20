@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { saveToy } from '../store/actions/toy.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+import { useSelector } from 'react-redux'
 
 
 
@@ -14,6 +15,8 @@ export function ToyEdit() {
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
     const navigate = useNavigate()
     const params = useParams()
+    const labels  = useSelector(storeState => storeState.toyModule.labels)
+
 
     useEffect(() => {
         if (params.toyId) {
@@ -41,6 +44,10 @@ export function ToyEdit() {
             case 'checkbox':
                 value = target.checked
                 break
+
+            case 'select-multiple': 
+                value = Array.from(target.selectedOptions, (option) => option.value)
+                break;
 
             default:
                 break;
@@ -73,7 +80,6 @@ export function ToyEdit() {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="price">price:</label>
                 <input type="number"
                     id="price"
                     name="price"
@@ -81,6 +87,19 @@ export function ToyEdit() {
                     value={toyToEdit.price}
                     onChange={handleChange}
                 />
+
+                <label htmlFor="labels">labels:</label>
+                    <select
+                        onChange={handleChange}
+                        name="labels"
+                        multiple
+                        value={toyToEdit.labels || []}>
+                        <option value=""> All </option>
+                        <>
+                            {labels.map(label => <option key={label} value={label}>{label}</option>)}
+                        </>
+                    </select>
+           
 
 <div>
                 <label htmlFor="inStock">in stock:</label>

@@ -54,8 +54,8 @@ function getDefaultFilter() {
     return {
         name: '',
         maxPrice: 0,
-        inStock: false,
-        label:'',
+        inStock: '',
+        labels:'',
         sortBy:'',
         sortByDir:false,
        
