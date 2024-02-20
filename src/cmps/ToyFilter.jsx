@@ -13,6 +13,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     onSetFilter = useRef(utilService.debounce(onSetFilter))
 
 
+
     useEffectUpdate(() => {
         onSetFilter.current(filterByToEdit)
     }, [filterByToEdit])
@@ -82,13 +83,15 @@ export function ToyFilter({ filterBy, onSetFilter }) {
             <label htmlFor="inStock" >In stock</label>
                 <select
                     onChange={handleChange}
-                    name="inStock"
-                    value={filterByToEdit.inStock || ''}>
-                    <option value=""> All </option>
-                    <option value={true}>In stock</option>
-                    <option value={false}>Out of stock</option>
-                </select>
-            
+                    list="labels"
+                />
+                <datalist id="labels">
+                    {labels.map((label,idx) =><option key={idx} value={label} />)}
+                </datalist>
+                <br />
+
+                <label htmlFor="inStock">In stock only:</label>
+                <input onChange={handleChange} type="checkbox" id="inStock" name="inStock" />
 
 
                 <label htmlFor="sortBy">Sort:</label>
@@ -100,19 +103,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                 </select>
                 <label htmlFor="SortByDir">Decending </label>
                 <input onChange={handleChange} type="checkbox" id="sortByDir" name="sortByDir" />
-                <label htmlFor="labels">Filter By</label>
-                <select
-                    onChange={handleChange}
-                    name="labels"
-                    id="labels"
-                    multiple
-                    value={filterByToEdit.labels || []}>
-                    <option value=""> All </option>
-                    <>
-                        {labels.map(label => <option key={label} value={label}>{label}</option>)}
-                    </>
-                </select>
-            
+   
             </form>
             </fieldset>
         </section>
