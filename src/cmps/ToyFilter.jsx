@@ -12,6 +12,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     onSetFilter = useRef(utilService.debounce(onSetFilter))
 
+
     useEffectUpdate(() => {
         onSetFilter.current(filterByToEdit)
     }, [filterByToEdit])
@@ -19,7 +20,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     function onSetFilterBy(ev) {
         ev.preventDefault()
         console.log(filterByToEdit)
-        onSetFilter(filterByToEdit)
+        onSetFilter.current(filterByToEdit)
     }
 
     function handleChange({ target }) {
@@ -37,10 +38,14 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                 value = target.checked
                  break
 
+            case 'select-multiple': 
+            value = Array.from(target.selectedOptions, (option) => option.value)
+            break;
+
+
             default:
                 break;
         }
-        console.log(field,value)
 
         setFilterByToEdit(prevFilter => ({
             ...prevFilter,
@@ -73,22 +78,17 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="label">Labels:</label>
-                <input type="text"
-                    id="label"
-                    name="label"
-                    placeholder="label"
-                    value={filterByToEdit.label}
-                    onChange={handleChange}
-                    list="labels"
-                />
-                <datalist id="labels">
-                    {labels.map((label,idx) =><option key={idx} value={label} />)}
-                </datalist>
-                <br />
 
-                <label htmlFor="inStock">In stock only:</label>
-                <input onChange={handleChange} type="checkbox" id="inStock" name="inStock" />
+            <label htmlFor="inStock" >In stock</label>
+                <select
+                    onChange={handleChange}
+                    name="inStock"
+                    value={filterByToEdit.inStock || ''}>
+                    <option value=""> All </option>
+                    <option value={true}>In stock</option>
+                    <option value={false}>Out of stock</option>
+                </select>
+            
 
 
                 <label htmlFor="sortBy">Sort:</label>
@@ -96,11 +96,23 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     <option value="">Select Sorting</option>
                     <option value="name">By name</option>
                     <option value="price">By price</option>
-                    <option value="ceatedAt">By criation date</option>
+                    <option value="createdAt">By criation date</option>
                 </select>
                 <label htmlFor="SortByDir">Decending </label>
                 <input onChange={handleChange} type="checkbox" id="sortByDir" name="sortByDir" />
-   
+                <label htmlFor="labels">Filter By</label>
+                <select
+                    onChange={handleChange}
+                    name="labels"
+                    id="labels"
+                    multiple
+                    value={filterByToEdit.labels || []}>
+                    <option value=""> All </option>
+                    <>
+                        {labels.map(label => <option key={label} value={label}>{label}</option>)}
+                    </>
+                </select>
+            
             </form>
             </fieldset>
         </section>

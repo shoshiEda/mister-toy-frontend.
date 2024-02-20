@@ -1,6 +1,5 @@
 
 import Axios from 'axios'
-import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
 
 // for cookies
@@ -54,8 +53,8 @@ function getDefaultFilter() {
     return {
         name: '',
         maxPrice: 0,
-        inStock: false,
-        label:'',
+        inStock: '',
+        labels:'',
         sortBy:'',
         sortByDir:false,
        
