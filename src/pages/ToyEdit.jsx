@@ -4,19 +4,35 @@ import { useEffect, useState } from "react"
 import { saveToy } from '../store/actions/toy.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { useSelector } from 'react-redux'
+import { useFormik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
-
-
+import { LabelCheckbox } from '../cmps/LabelCheckbox.jsx'
 import { toyService } from "../services/toy.service.js"
 import { useNavigate, useParams,Link } from "react-router-dom"
+
+const EditingSchema = Yup.object().shape({
+    name: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('We need the toy name'),
+    price: Yup.number().positive().required('The price should be a positive number'),
+})
 
 
 export function ToyEdit() {
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
+    const [toyLabels, setToyLabels] = useState([])
     const navigate = useNavigate()
     const params = useParams()
     const labels  = useSelector(storeState => storeState.toyModule.labels)
 
+
+    const {values, handleBlur,handleSubmit,handleChange,setValues,errors} = useFormik({
+        initialValues:toyToEdit,
+        validationSchema:EditingSchema,
+        onSubmit:{onSaveToy}
+    })
 
     useEffect(() => {
         if (params.toyId) {
@@ -24,44 +40,31 @@ export function ToyEdit() {
         }
     }, [])
 
+    useEffect(() => {
+        setValues(toyToEdit);
+    }, [toyToEdit])
+
     function loadToy() {
         toyService.getById(params.toyId)
             .then(setToyToEdit)
             .catch(err=>console.log('err:', err))
     }
 
-    function handleChange({ target }) {
-        const field = target.name
-        let value = target.value
-        
-
-        switch (target.type) {
-            case 'number':
-            case 'range':
-                value = +value
-                break;
-
-            case 'checkbox':
-                value = target.checked
-                break
-
-            case 'select-multiple': 
-                value = Array.from(target.selectedOptions, (option) => option.value)
-                break;
-
-            default:
-                break;
-        }
-
-        setToyToEdit(prevToy => ({ ...prevToy, [field]: value }))
-    }
 
     function onSaveToy(ev) {
         ev.preventDefault()
-        saveToy(toyToEdit)
-            .then(()=> showSuccessMsg(`Toy added: ${toyToEdit.name}`))
+
+        values.labels=toyLabels
+        console.log(values)
+        saveToy(values)
+            .then(()=> showSuccessMsg(`Toy added: ${values.name}`))
             .then(() => navigate('/toy'))
             .catch(err => console.log('err:', err))
+    }
+
+    function onSetFilterByToEdit(value)
+    {
+        setToyLabels(value )
     }
 
    
@@ -76,35 +79,32 @@ export function ToyEdit() {
                     id="name"
                     name="name"
                     placeholder="name"
-                    value={toyToEdit.name}
+                    value={values.name}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                 />
+                {errors.name && <small>{errors.name}</small>}
 
                 <input type="number"
                     id="price"
                     name="price"
                     placeholder="price"
-                    value={toyToEdit.price}
+                    value={values.price}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                 />
+                {errors.price && <small>{errors.price}</small>}
 
-                <label htmlFor="labels">labels:</label>
-                    <select
-                        onChange={handleChange}
-                        name="labels"
-                        multiple
-                        value={toyToEdit.labels || []}>
-                        <option value=""> All </option>
-                        <>
-                            {labels.map(label => <option key={label} value={label}>{label}</option>)}
-                        </>
-                    </select>
-           
 
-<div>
+        <LabelCheckbox labels={labels} onSetFilterByToEdit={onSetFilterByToEdit}/>
+
+
+            <div>
                 <label htmlFor="inStock">in stock:</label>
-                <input onChange={handleChange} type="checkbox" id="inStock" name="inStock" />
-                </div>
+                <input type="checkbox" id="inStock"value={values.inStock}
+                    onChange={handleChange}
+                    onBlur={handleBlur} />
+            </div>
                 <button>Save</button>
                 <button><Link to="/toy">Back</Link></button>
 

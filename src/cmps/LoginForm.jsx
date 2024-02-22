@@ -3,7 +3,7 @@ import { userService } from "../services/user.service.js"
 
 // const { useState } = React
 
-export function LoginForm({ onLogin, isSignup }) {
+export function LoginForm({ onLogin, isSignup ,setDynClass }) {
 
     const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
 
@@ -15,6 +15,8 @@ export function LoginForm({ onLogin, isSignup }) {
     function handleSubmit(ev) {
         ev.preventDefault()
         onLogin(credentials)
+        setDynClass('close')
+
     }
 
     return (

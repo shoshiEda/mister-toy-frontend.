@@ -8,10 +8,12 @@ import { useNavigate, useParams ,Link } from "react-router-dom"
 import  defaultPic  from '../assets/img/default.jpeg'
 
 
+
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const { toyId } = useParams()
     const navigate = useNavigate()
+
 
     useEffect(() => {
         loadToy()
@@ -26,20 +28,20 @@ export function ToyDetails() {
                 navigate('/toy')
             })
     }
-console.log(toy)
-    if (!toy) return <div>Loading...</div>
-    return (
-        <section className="car-details">
-            <h1>Toy name : {toy.name}</h1>
-            <h5>Price: ${toy.price}</h5>
-            <h5>Lables:  
-            {toy.labels.map((label, idx) => (
-  <span key={idx}>
-    { label}
-    {idx === toy.labels.length - 1 ? '' : ' ,'}
-  </span>
-))}
-            </h5>
+            if (!toy) return <div>Loading...</div>
+            return (
+                <section className="car-details">
+                    <h1>Toy name : {toy.name}</h1>
+                    <h5>Price: ${toy.price}</h5>
+                    {toy.labels && toy.labels.length && <h5>Lables:  
+                    {toy.labels.map((label, idx) => (
+                <span key={idx}>
+                { label}
+                {idx === toy.labels.length - 1 ? '' : ' ,'}
+                </span>
+        ))}
+            
+            </h5>}
             <h5>Created at: {new Date(toy.createdAt).toLocaleDateString()}</h5>
             <h5>In stock? 
             {toy.inStock? ' Yes' : ' No'}

@@ -1,4 +1,4 @@
-// const { useState, useEffect, useRef } = React
+import { LabelCheckbox } from './LabelCheckbox.jsx'
 
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
@@ -24,6 +24,12 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         onSetFilter.current(filterByToEdit)
     }
 
+    function onSetFilterByToEdit(value){
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            labels: value}))
+    }
+
     function handleChange({ target }) {
         const field = target.name
         let value = target.value
@@ -38,11 +44,6 @@ export function ToyFilter({ filterBy, onSetFilter }) {
             case 'checkbox':
                 value = target.checked
                  break
-
-            case 'select-multiple': 
-            value = Array.from(target.selectedOptions, (option) => option.value)
-            break;
-
 
             default:
                 break;
@@ -79,19 +80,19 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     onChange={handleChange}
                 />
 
+            <LabelCheckbox labels={labels} onSetFilterByToEdit={onSetFilterByToEdit}/>
 
-            <label htmlFor="inStock" >In stock</label>
+            <label className='filter-label'>
+                <span className='filter-label'>In stock</span>
                 <select
                     onChange={handleChange}
-                    list="labels"
-                />
-                <datalist id="labels">
-                    {labels.map((label,idx) =><option key={idx} value={label} />)}
-                </datalist>
-                <br />
-
-                <label htmlFor="inStock">In stock only:</label>
-                <input onChange={handleChange} type="checkbox" id="inStock" name="inStock" />
+                    name="inStock"
+                    value={filterByToEdit.inStock || ''}>
+                    <option value=""> All </option>
+                    <option value={true}>In stock</option>
+                    <option value={false}>Out of stock</option>
+                </select>
+            </label>
 
 
                 <label htmlFor="sortBy">Sort:</label>

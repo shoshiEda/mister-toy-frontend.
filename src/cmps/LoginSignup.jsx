@@ -28,8 +28,8 @@ export function LoginSignup({ onSetUser }) {
             .catch((err) => { showErrorMsg('Oops try again') })
     }
 
-    return (
-        <div className="login-page">
+    return (    
+        <div className=" login-page">
             <LoginForm
                 onLogin={onLogin}
                 isSignup={isSignup}

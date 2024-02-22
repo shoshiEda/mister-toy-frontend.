@@ -1,8 +1,21 @@
 .toy-filter {
     background-color: var(--clr2bg);
-    padding: 1em;
+    margin: 0 auto;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    padding-bottom: 1rem;
+    padding-top: 0.8rem;
+    border-radius: 1rem;
+
 }
 
 .toy-filter label{
     margin: 0.5rem;
+}
+
+fieldset{
+    margin: 0 auto;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+
 }
