@@ -42,24 +42,35 @@ export function ToyEdit() {
 
     useEffect(() => {
         setValues(toyToEdit);
+        setToyLabels(toyToEdit.labels)
+
     }, [toyToEdit])
 
-    function loadToy() {
-        toyService.getById(params.toyId)
-            .then(setToyToEdit)
-            .catch(err=>console.log('err:', err))
+    async function loadToy() {
+        try{
+        const toy = await toyService.getById(params.toyId)
+        setToyToEdit(toy)
+        }
+        catch(err){
+            showErrorMsg('err:', err)
+        }
     }
 
 
-    function onSaveToy(ev) {
+    async function onSaveToy(ev) {
         ev.preventDefault()
 
         values.labels=toyLabels
-        console.log(values)
-        saveToy(values)
-            .then(()=> showSuccessMsg(`Toy added: ${values.name}`))
-            .then(() => navigate('/toy'))
-            .catch(err => console.log('err:', err))
+        if(!values.name) return
+
+        try{
+            saveToy(values)
+            showSuccessMsg(`Toy added: ${values.name}`)
+            navigate('/toy')
+        }
+        catch(err) {
+            console.log('err:', err)
+        }
     }
 
     function onSetFilterByToEdit(value)
@@ -67,7 +78,6 @@ export function ToyEdit() {
         setToyLabels(value )
     }
 
-   
 
     return (
         <section className="toy-editor full main-layout">
@@ -95,9 +105,9 @@ export function ToyEdit() {
                 />
                 {errors.price && <small>{errors.price}</small>}
 
-
-        <LabelCheckbox labels={labels} onSetFilterByToEdit={onSetFilterByToEdit}/>
-
+        <span>catagories:
+        <LabelCheckbox labels={labels} onSetFilterByToEdit={onSetFilterByToEdit} toyToEdit={values.labels}/>
+        </span>
 
             <div>
                 <label htmlFor="inStock">in stock:</label>

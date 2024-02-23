@@ -9,6 +9,8 @@ import { showErrorMsg } from '../services/event-bus.service.js'
 import { SET_USER } from '../store/reducers/user.reducer.js'
 import { OpenMenuSideBar } from '../cmps/OpenMenuSideBar.jsx'
 import { LoginSighnupModal } from '../cmps/LoginSighnupModal.jsx'
+import { logout } from '../store/actions/user.actions.js'
+
 
 
 
@@ -22,19 +24,15 @@ export function AppHeader() {
 
 
     function onLogout() {
-        userService.logout()
-            .then(() => {
-                // DONE: use dispatch
-                onSetUser(null)
-            })
-            .catch((err) => {
+       try{
+        logout()
+       }
+        catch(err){
                 showErrorMsg('OOPs try again')
-            })
+        }
     }
 
     function onSetUser(user) {
-        // DONE: use dispatch
-        // setUser(user)
         dispatch({ type: SET_USER, user })
         navigate('/')
     }

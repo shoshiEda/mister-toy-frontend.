@@ -10,6 +10,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { loadToys, removeToy, removeToyOptimistic, saveToy, setFilterBy } from '../store/actions/toy.actions.js'
 //import { ADD_CAR_TO_CART } from '../store/reducers/car.reducer.js'
 import { useEffect } from 'react'
+import { CatchingPokemon } from '@mui/icons-material'
 
 export function ToyIndex() {
     const dispatch = useDispatch()
@@ -19,21 +20,23 @@ export function ToyIndex() {
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
 
     useEffect(() => {
-        loadToys()
-            .catch(() => {
+        try{
+            loadToys()
+        }
+        catch{
                 showErrorMsg('Cannot show toys')
-            })
+            }
     }, [filterBy])
 
     function onRemoveToy(toyId) {
-        removeToyOptimistic(toyId)
-            .then(() => {
-                showSuccessMsg('Toy removed')
-            })
-            .catch(err => {
+        try{
+            removeToyOptimistic(toyId)
+            showSuccessMsg('Toy removed')
+        }
+        catch(err){
                 console.log('Cannot remove toy', err)
                 showErrorMsg('Cannot remove toy')
-            })
+            }
     }
 
 
@@ -48,7 +51,6 @@ export function ToyIndex() {
         dispatch({ type: ADD_CAR_TO_CART, car })
         showSuccessMsg('Added to Cart')
     }*/
-
 
     return (
         <div>

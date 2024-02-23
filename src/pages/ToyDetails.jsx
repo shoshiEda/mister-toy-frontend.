@@ -9,6 +9,7 @@ import  defaultPic  from '../assets/img/default.jpeg'
 
 
 
+
 export function ToyDetails() {
     const [toy, setToy] = useState(null)
     const { toyId } = useParams()
@@ -19,17 +20,23 @@ export function ToyDetails() {
         loadToy()
     }, [toyId])
 
-    function loadToy() {
-        toyService.getById(toyId)
-            .then((toy) => setToy(toy))
-            .catch((err) => {
+    async function loadToy() {
+        try{
+            const toy=await  toyService.getById(toyId)
+            setToy(toy)
+        }
+        catch(err){
                 console.log('Had issues in toy details', err)
                 showErrorMsg('Cannot load toy')
                 navigate('/toy')
-            })
+            }
     }
-            if (!toy) return <div>Loading...</div>
-            return (
+
+
+
+
+    if (!toy) return <div>Loading...</div>
+    return (
                 <section className="car-details">
                     <h1>Toy name : {toy.name}</h1>
                     <h5>Price: ${toy.price}</h5>
@@ -39,7 +46,7 @@ export function ToyDetails() {
                 { label}
                 {idx === toy.labels.length - 1 ? '' : ' ,'}
                 </span>
-        ))}
+    ))}
             
             </h5>}
             <h5>Created at: {new Date(toy.createdAt).toLocaleDateString()}</h5>

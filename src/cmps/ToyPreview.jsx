@@ -9,7 +9,7 @@ export function ToyPreview({ toy, onRemoveToy/*, addToCart*/ }) {
             <Link to={`/toy/${toy._id}`} >
                 <h4>{toy.name}</h4>
             </Link>
-            <p>Price: <span>${toy.price.toLocaleString()}</span></p>
+            <p>Price: <span>${toy.price}</span></p>
             <p>Created At: <span>{new Date(toy.createdAt).toLocaleDateString()}</span></p>
             <img src={defaultPic} alt="Toy" />            
 

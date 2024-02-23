@@ -66,6 +66,7 @@
    padding: 2rem;
    color: var(--clr1bg-light);
     border-radius: 1rem;
+
   }
 
   .login-page a{
@@ -74,6 +75,16 @@
     text-decoration: underline;
   }
 
- 
+  .login-page input{
+    font-size: 7vw;
+    margin: 1rem;
+    width: 40vh;
+  }
+
+  .login-page button{
+    font-size: 5vw;
+    margin-inline-start: 50%;
+    translate: -50%;
+  }
   
 }

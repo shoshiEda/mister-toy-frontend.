@@ -28,15 +28,19 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export function LabelCheckbox({labels,onSetFilterByToEdit}) {
+export function LabelCheckbox({labels,onSetFilterByToEdit,toyToEdit}) {
   const theme = useTheme();
   const [selectedLabels, setSelectedLabels] = React.useState([]);
 
+
+  
   const handleChange = (event) => {
    
     setSelectedLabels(event.target.value);
     onSetFilterByToEdit(event.target.value);
   }
+
+ 
 
   return (
     <div>
