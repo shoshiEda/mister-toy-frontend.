@@ -57,7 +57,7 @@ function getDefaultFilter() {
         labels:'',
         sortBy:'',
         sortByDir:false,
-       
+       pageIdx:0,
     }
 }
 

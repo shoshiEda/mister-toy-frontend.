@@ -18,6 +18,8 @@ export function ToyIndex() {
     //const cart = useSelector(storeState => storeState.carModule.shoppingCart)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
+    const user = useSelector(storeState => storeState.userModule.loggedinUser)
+    
 
     useEffect(() => {
         try{
@@ -41,7 +43,14 @@ export function ToyIndex() {
 
 
     function onSetFilter(filterBy) {
-        // setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+        setFilterBy(filterBy)
+    }
+
+    function setPagination(diff){
+        let tempPageIdx=filterBy.pageIdx+diff
+        if(tempPageIdx<0) return
+
+        filterBy.pageIdx+=diff
         setFilterBy(filterBy)
     }
 
@@ -51,12 +60,12 @@ export function ToyIndex() {
         dispatch({ type: ADD_CAR_TO_CART, car })
         showSuccessMsg('Added to Cart')
     }*/
-
+console.log(toys)
     return (
         <div>
             <h3>Toys App</h3>
             <main>
-                <button> <Link to='/toy/edit'>Add Toy</Link></button>
+                {user && user.isAdmin && <button> <Link to='/toy/edit'>Add Toy</Link></button>}
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                 {!isLoading && <ToyList
                     toys={toys}
@@ -65,6 +74,10 @@ export function ToyIndex() {
                 />}
                 {isLoading && <div>Loading...</div>}
                 <hr />
+                <div className='flex justify-between'>
+                <button onClick={()=>setPagination(-1)}>prev page</button>
+                <button onClick={()=>setPagination(1)}>next page</button>
+                </div>
                 {/*<pre>{JSON.stringify(cart, null, 2)}</pre>*/}
             </main>
         </div>

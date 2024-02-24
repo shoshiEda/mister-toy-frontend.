@@ -7,6 +7,7 @@ export async function loadToys() {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     const filterBy = store.getState().toyModule.filterBy
     
+    
     try{ 
         const toys = await toyService.query(filterBy)
         store.dispatch({ type: SET_TOYS, toys })
@@ -56,6 +57,8 @@ export function removeToy(toyId) {
 
 export async function saveToy(toy) {
     const type = toy._id ? UPDATE_TOY : ADD_TOY
+    if(!toy._id) toy.createdAt=Date.now()
+    
     try{
         const toyToSave = await toyService.save(toy)
         store.dispatch({ type, toy: toyToSave })
