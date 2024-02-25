@@ -62,6 +62,8 @@ export function ToyIndex() {
         dispatch({ type: ADD_CAR_TO_CART, car })
         showSuccessMsg('Added to Cart')
     }*/
+
+    console.log(toys,maxPages)
     return (
         <div>
             <h3>Toys App</h3>

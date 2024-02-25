@@ -64,7 +64,7 @@ export function toyReducer(state = initialState, action = {}) {
             return {...state,labels}
 
         case SET_PAGES:
-            return {...state,...action.maxPages}
+            return {...state, maxPages:action.maxPages}
 
 
         // shopping cart
