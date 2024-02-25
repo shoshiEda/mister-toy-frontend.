@@ -1,5 +1,5 @@
 import { toyService } from "../../services/toy.service.js"
-import { ADD_TOY, TOY_UNDO, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TOY } from "../reducers/toy.reducer.js"
+import { ADD_TOY, TOY_UNDO, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TOY , SET_PAGES } from "../reducers/toy.reducer.js"
 import { store } from "../store.js"
 
 
@@ -9,9 +9,10 @@ export async function loadToys() {
     
     
     try{ 
-        const toys = await toyService.query(filterBy)
+        const {toys,maxPages} = await toyService.query(filterBy)
         store.dispatch({ type: SET_TOYS, toys })
-        return(toys)
+        store.dispatch({ type: SET_PAGES, maxPages })
+        return(toys,maxPages)
         }
         catch(err){
             console.log('toy action -> Cannot load toys', err)

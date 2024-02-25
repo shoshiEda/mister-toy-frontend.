@@ -7,6 +7,9 @@ export const REMOVE_TOY = 'REMOVE_TOY'
 export const ADD_TOY = 'ADD_TOY'
 export const UPDATE_TOY = 'UPDATE_TOY'
 export const TOY_UNDO = 'TOY_UNDO'
+export const SET_PAGES = 'SET_PAGES'
+
+
 
 // shopping cart
 /*export const SET_CART_IS_SHOWN = 'SET_CART_IS_SHOWN'
@@ -29,7 +32,8 @@ const initialState = {
     isLoading: false,
     filterBy: toyService.getDefaultFilter(),
     labels: ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 
-    'Outdoor', 'Battery Powered']
+    'Outdoor', 'Battery Powered'],
+    maxPages:1,
 }
 
 export function toyReducer(state = initialState, action = {}) {
@@ -58,6 +62,9 @@ export function toyReducer(state = initialState, action = {}) {
 
         case GET_LABELS:
             return {...state,labels}
+
+        case SET_PAGES:
+            return {...state,...action.maxPages}
 
 
         // shopping cart

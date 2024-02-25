@@ -64,7 +64,7 @@ export function ToyEdit() {
         if(!values.name) return
 
         try{
-            saveToy(values)
+            await saveToy(values)
             showSuccessMsg(`Toy added: ${values.name}`)
             navigate('/toy')
         }
