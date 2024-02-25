@@ -17,6 +17,8 @@ export const toyService = {
     getEmptyToy,
     getDefaultFilter,
     saveReview,
+    removeReview,
+    saveReview,
     removeReview
 }
 
@@ -35,10 +37,19 @@ function remove(toyId) {
 function save(toy) {
     if (toy._id) {
         const toyId=toy._id
-        return httpService.put(BASE_URL , toy)
+        
+        return httpService.put(BASE_URL  + toyId, toy)
     } else {
         return httpService.post(BASE_URL, toy)
     }
+}
+
+function saveReview(txt,toyId){
+    return httpService.post(BASE_URL + toyId+'/msg/',{txt})
+}
+
+function removeReview(toyId,revId){
+    return httpService.delete(BASE_URL + toyId+'/msg/'+ revId)
 }
 
 function saveReview(txt,toyId){
