@@ -19,7 +19,9 @@ export function ToyIndex() {
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const user = useSelector(storeState => storeState.userModule.loggedinUser)
-    
+    const maxPages = useSelector(storeState => storeState.toyModule.maxPages)
+
+    maxPages
 
     useEffect(() => {
         try{
@@ -48,7 +50,7 @@ export function ToyIndex() {
 
     function setPagination(diff){
         let tempPageIdx=filterBy.pageIdx+diff
-        if(tempPageIdx<0) return
+        if(tempPageIdx<0 || tempPageIdx>maxPages) return
 
         filterBy.pageIdx+=diff
         setFilterBy(filterBy)
@@ -60,7 +62,6 @@ export function ToyIndex() {
         dispatch({ type: ADD_CAR_TO_CART, car })
         showSuccessMsg('Added to Cart')
     }*/
-console.log(toys)
     return (
         <div>
             <h3>Toys App</h3>

@@ -15,7 +15,9 @@ export const toyService = {
     save,
     remove,
     getEmptyToy,
-    getDefaultFilter
+    getDefaultFilter,
+    saveReview,
+    removeReview
 }
 
 function query(filterBy = {}) {
@@ -32,10 +34,19 @@ function remove(toyId) {
 
 function save(toy) {
     if (toy._id) {
-        return httpService.put(BASE_URL, toy)
+        const toyId=toy._id
+        return httpService.put(BASE_URL , toy)
     } else {
         return httpService.post(BASE_URL, toy)
     }
+}
+
+function saveReview(txt,toyId){
+    return httpService.post(BASE_URL + toyId+'/msg/',{txt})
+}
+
+function removeReview(toyId,revId){
+    return httpService.delete(BASE_URL + toyId+'/msg/'+ revId)
 }
 
 
@@ -60,6 +71,8 @@ function getDefaultFilter() {
        pageIdx:0,
     }
 }
+
+
 
 
 
