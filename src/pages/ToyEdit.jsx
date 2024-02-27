@@ -10,6 +10,8 @@ import * as Yup from 'yup';
 import { LabelCheckbox } from '../cmps/LabelCheckbox.jsx'
 import { toyService } from "../services/toy.service.js"
 import { useNavigate, useParams,Link } from "react-router-dom"
+import { ImgUploader } from './ImgUploader.jsx'
+
 
 const EditingSchema = Yup.object().shape({
     name: Yup.string()
@@ -56,11 +58,20 @@ export function ToyEdit() {
         }
     }
 
+    function onUploaded(imgUrl) {
+        setToyToEdit({ ...toyToEdit, imgUrl })
+        console.log(toyToEdit)
+
+    }
+
 
     async function onSaveToy(ev) {
         ev.preventDefault()
 
         values.labels=toyLabels
+        //console.log(toyToEdit)
+        values.imgUrl=toyToEdit.imgUrl || ''
+        //console.log(values)
         if(!values.name) return
 
         try{
@@ -115,6 +126,7 @@ export function ToyEdit() {
                     onChange={handleChange}
                     onBlur={handleBlur} />
             </div>
+            <ImgUploader onUploaded={onUploaded} />
                 <button>Save</button>
                 <button><Link to="/toy">Back</Link></button>
 

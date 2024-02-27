@@ -20,3 +20,10 @@ small{
     font-size: 1rem;
     color:red;
 }
+
+.upload-preview{
+    text-align: center;
+}
+
+.upload-preview input{
+margin-inline-start: 50%;}

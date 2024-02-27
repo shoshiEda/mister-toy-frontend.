@@ -16,7 +16,7 @@ export function ToyPreview({ toy, onRemoveToy/*, addToCart*/ }) {
             </Link>
             <p>Price: <span>${toy.price}</span></p>
             <p>Created At: <span>{new Date(toy.createdAt).toLocaleDateString()}</span></p>
-            <img src={defaultPic} alt="Toy" />            
+            <img src={toy.imgUrl || defaultPic} alt="Toy" />            
 
             {user && user.isAdmin && <div>
                 <button onClick={() => {
